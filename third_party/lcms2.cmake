@@ -43,6 +43,29 @@ add_library(lcms2 STATIC
 )
 target_include_directories(lcms2
     PUBLIC "${CMAKE_CURRENT_LIST_DIR}/lcms/include")
+
+if (JPEGXL_ENABLE_LCMS_FAST_FLOAT)
+  target_sources(lcms2 PRIVATE
+    lcms/plugins/fast_float/src/fast_8_curves.c
+    lcms/plugins/fast_float/src/fast_8_matsh_sse.c
+    lcms/plugins/fast_float/src/fast_8_matsh.c
+    lcms/plugins/fast_float/src/fast_8_tethra.c
+    lcms/plugins/fast_float/src/fast_16_tethra.c
+    lcms/plugins/fast_float/src/fast_float_15bits.c
+    lcms/plugins/fast_float/src/fast_float_15mats.c
+    lcms/plugins/fast_float/src/fast_float_cmyk.c
+    lcms/plugins/fast_float/src/fast_float_curves.c
+    lcms/plugins/fast_float/src/fast_float_matsh.c
+    lcms/plugins/fast_float/src/fast_float_separate.c
+    lcms/plugins/fast_float/src/fast_float_sup.c
+    lcms/plugins/fast_float/src/fast_float_tethra.c
+    lcms/plugins/fast_float/src/fast_float_lab.c
+    lcms/plugins/fast_float/src/fast_float_internal.h
+  )
+  target_include_directories(lcms2
+      PUBLIC "${CMAKE_CURRENT_LIST_DIR}/lcms/plugins/fast_float/include")
+endif()  # JPEGXL_ENABLE_LCMS_FAST_FLOAT
+
 # This warning triggers with gcc-8.
 if (${CMAKE_C_COMPILER_ID} MATCHES "GNU")
 target_compile_options(lcms2
